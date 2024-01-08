@@ -1,12 +1,15 @@
-import '@/styles/globals.css'
-import { ToastContainer } from 'react-toastify'
+import "@/styles/globals.css";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SessionProvider } from "next-auth/react";
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <>
-    <ToastContainer />
-    <Component {...pageProps} />
+      <SessionProvider session={session}>
+        <ToastContainer />
+        <Component {...pageProps} />
+      </SessionProvider>
     </>
-    )
+  );
 }

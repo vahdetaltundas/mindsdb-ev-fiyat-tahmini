@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import {
   loginInitialValues,
   loginValidationSchema,
@@ -11,8 +10,10 @@ import cookie from "cookie";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import ErrorMessage from "@/components/errorMessage";
+import { useSession, signIn, getSession} from "next-auth/react"
 
 const index = () => {
+  const {data:session}=useSession();
   const router = useRouter();
   const formik = useFormik({
     initialValues: loginInitialValues,
@@ -107,6 +108,7 @@ const index = () => {
                     </button>
                   </form>
                   <button
+                  onClick={()=>signIn("github")}
                     type="button"
                     className="text-white w-full bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center me-2 mb-2"
                   >
@@ -143,5 +145,19 @@ const index = () => {
     </div>
   );
 };
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+  if (session) {
+    return {
+      redirect: {
+        destination: "/predict",
+        permanent: false,
+      },
+    };
+  }
 
+  return {
+    props: {},
+  };
+}
 export default index;

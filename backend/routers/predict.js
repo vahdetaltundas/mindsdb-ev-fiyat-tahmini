@@ -5,7 +5,7 @@ const MindsDB = require("mindsdb-js-sdk").default;
 router.post("/", async (req, res) => {
     try {
         // MindsDB modelini ve tahmin sorgusunu tanımla
-        const homeModel = await MindsDB.Models.getModel("home_model2", "mindsdb");
+        const homeModel = await MindsDB.Models.getModel("evtahminimodeli", "mindsdb");
         const {
             area,
             bedrooms,

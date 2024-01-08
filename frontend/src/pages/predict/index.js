@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import styles from './styles.module.css';
 
@@ -45,6 +46,11 @@ export default function Home() {
       console.error('Ev fiyatı tahmini yapılamadı:', error);
     }
   };
+import Header from '@/components/Headers'
+import { verifyJwtToken } from '@/utils/verifyJwtToken';
+import { getSession } from 'next-auth/react';
+import React from 'react'
+main
 
   return (
     <div className={styles.container}>
