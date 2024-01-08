@@ -23,26 +23,26 @@ router.post("/", async (req, res) => {
 
         const queryOptions = {
             where: [
-                `area=${area}`,
-                `bedrooms=${bedrooms}`,
-                `bathrooms=${bathrooms}`,
-                `stories=${stories}`,
-                `mainroad='${mainroad}'`,
-                `guestroom='${guestroom}'`,
-                `basement='${basement}'`,
-                `hotwaterheating='${hotwaterheating}'`,
-                `airconditioning='${airconditioning}'`,
-                `parking=${parking}`,
-                `prefarea='${prefarea}'`,
-                `furnishingstatus='${furnishingstatus}'`,
+                `area = ${area}`,
+                `bedrooms = ${bedrooms}`,
+                `bathrooms = ${bathrooms}`,
+                `stories = ${stories}`,
+                `mainroad = '${mainroad}'`,
+                `guestroom = '${guestroom}'`,
+                `basement = '${basement}'`,
+                `hotwaterheating = '${hotwaterheating}'`,
+                `airconditioning = '${airconditioning}'`,
+                `parking = '${parking}'`,  // parking özelliğini tek tırnak içinde yazın
+                `prefarea = '${prefarea}'`,
+                `furnishingstatus = '${furnishingstatus}'`,
             ],
         };
+        
 
         // MindsDB'den tahmin yap
         const prediction = await homeModel.query(queryOptions);
         const homePrice = prediction.value;
 
-        // Tahmin sonucunu ve fiyatı gönder
         res.status(200).json({
             homePrice: homePrice,
         });

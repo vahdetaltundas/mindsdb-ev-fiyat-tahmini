@@ -1,82 +1,90 @@
+import React from "react";
+import { useState } from "react";
+import styles from "../../styles/styles.module.css";
+import axios from "axios";
+import { useFormik } from "formik";
+import {
+  predictInitialValues,
+  predictValidationSchema,
+} from "@/validations/predictValidation";
 
-import { useState } from 'react';
-import styles from './styles.module.css';
+const Predict = () => {
+  const formik = useFormik({
+    initialValues: predictInitialValues,
+    validationSchema: predictValidationSchema,
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}predict`,
+          {
+            area: values.area,
+            bedrooms: values.bedrooms,
+            bathrooms: values.bathrooms,
+            stories: values.stories,
+            mainroad: values.mainroad,
+            guestroom: values.guestroom,
+            basement: values.basement,
+            hotwaterheating: values.hotwaterheating,
+            airconditioning: values.airconditioning,
+            parking: values.parking,
+            prefarea: values.prefarea,
+            furnishingstatus: "furnished",
+          }
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error("Tahmin yapılamadı:", error);
 
-export default function Home() {
-  const [formData, setFormData] = useState({
-    area: '',
-    bedrooms: '',
-    bathrooms: '',
-    stories: '',
-    mainroad: '',
-    guestroom: '',
-    basement: '',
-    hotwaterheating: '',
-    airconditioning: '',
-    parking: '',
-    prefarea: '',
-    furnishingstatus: ''
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
-  const handleCalculate = async () => {
-    try {
-      const response = await fetch('http://localhost:3001', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('HTTP error! ' + response.status);
       }
-
-      const result = await response.json();
-      console.log('Ev fiyatı tahmini:', result.homePrice);
-    } catch (error) {
-      console.error('Ev fiyatı tahmini yapılamadı:', error);
-    }
-  };
-import Header from '@/components/Headers'
-import { verifyJwtToken } from '@/utils/verifyJwtToken';
-import { getSession } from 'next-auth/react';
-import React from 'react'
-main
-
+    },
+  });
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}></div>
-      <div className={styles.form}>
-      
-      
+      <form className={styles.form} onSubmit={formik.handleSubmit}>
         <label>
           Alan:
-          <input type="text" name="area" value={formData.area} onChange={handleInputChange} />
+          <input
+            type="text"
+            name="area"
+            value={formik.values.area}
+            onChange={formik.handleChange}
+          />
         </label>
         <label>
           Yatak Odası Sayısı:
-          <input type="text" name="bedrooms" value={formData.bedrooms} onChange={handleInputChange} />
+          <input
+            type="text"
+            name="bedrooms"
+            value={formik.values.bedrooms}
+            onChange={formik.handleChange}
+          />
         </label>
         <label>
           Banyo Sayısı:
-          <input type="text" name="bathrooms" value={formData.bathrooms} onChange={handleInputChange} />
+          <input
+            type="text"
+            name="bathrooms"
+            value={formik.values.bathrooms}
+            onChange={formik.handleChange}
+          />
         </label>
         <label>
           Kat Sayısı:
-          <input type="text" name="stories" value={formData.stories} onChange={handleInputChange} />
+          <input
+            type="text"
+            name="stories"
+            value={formik.values.stories}
+            onChange={formik.handleChange}
+          />
         </label>
         <label>
           Ana Yol Üzerinde Mi?
-          <select name="mainroad" value={formData.mainroad} onChange={handleInputChange}>
+          <select
+            name="mainroad"
+            value={formik.values.mainroad}
+            onChange={formik.handleChange}
+          >
             <option value="">Seçiniz</option>
             <option value="Evet">Evet</option>
             <option value="Hayır">Hayır</option>
@@ -84,7 +92,11 @@ main
         </label>
         <label>
           Misafir Odası Var Mı?
-          <select name="guestroom" value={formData.guestroom} onChange={handleInputChange}>
+          <select
+            name="guestroom"
+            value={formik.values.guestroom}
+            onChange={formik.handleChange}
+          >
             <option value="">Seçiniz</option>
             <option value="Evet">Evet</option>
             <option value="Hayır">Hayır</option>
@@ -92,7 +104,11 @@ main
         </label>
         <label>
           Bodrum Var Mı?
-          <select name="basement" value={formData.basement} onChange={handleInputChange}>
+          <select
+            name="basement"
+            value={formik.values.basement}
+            onChange={formik.handleChange}
+          >
             <option value="">Seçiniz</option>
             <option value="Evet">Evet</option>
             <option value="Hayır">Hayır</option>
@@ -100,7 +116,11 @@ main
         </label>
         <label>
           Sıcak Su Isıtma Var Mı?
-          <select name="hotwaterheating" value={formData.hotwaterheating} onChange={handleInputChange}>
+          <select
+            name="hotwaterheating"
+            value={formik.values.hotwaterheating}
+            onChange={formik.handleChange}
+          >
             <option value="">Seçiniz</option>
             <option value="Evet">Evet</option>
             <option value="Hayır">Hayır</option>
@@ -108,7 +128,11 @@ main
         </label>
         <label>
           Klima Var Mı?
-          <select name="airconditioning" value={formData.airconditioning} onChange={handleInputChange}>
+          <select
+            name="airconditioning"
+            value={formik.values.airconditioning}
+            onChange={formik.handleChange}
+          >
             <option value="">Seçiniz</option>
             <option value="Evet">Evet</option>
             <option value="Hayır">Hayır</option>
@@ -116,7 +140,11 @@ main
         </label>
         <label>
           Park Yeri Var Mı?
-          <select name="parking" value={formData.parking} onChange={handleInputChange}>
+          <select
+            name="parking"
+            value={formik.values.parking}
+            onChange={formik.handleChange}
+          >
             <option value="">Seçiniz</option>
             <option value="Evet">Evet</option>
             <option value="Hayır">Hayır</option>
@@ -124,7 +152,11 @@ main
         </label>
         <label>
           Tercih Edilen Bölge?
-          <select name="prefarea" value={formData.prefarea} onChange={handleInputChange}>
+          <select
+            name="prefarea"
+            value={formik.values.prefarea}
+            onChange={formik.handleChange}
+          >
             <option value="">Seçiniz</option>
             <option value="Evet">Evet</option>
             <option value="Hayır">Hayır</option>
@@ -132,17 +164,22 @@ main
         </label>
         <label>
           Mobilya Durumu?
-          <select name="furnishingstatus" value={formData.furnishingstatus} onChange={handleInputChange}>
+          <select
+            name="furnishingstatus"
+            value={formik.values.furnishingstatus}
+            onChange={formik.handleChange}
+          >
             <option value="">Seçiniz</option>
             <option value="Evet">Evet</option>
             <option value="Hayır">Hayır</option>
           </select>
         </label>
-        <button className={styles.calculateButton} onClick={handleCalculate}>
+        <button className={styles.calculateButton} type="submit">
           Hesapla
         </button>
-      </div>
+      </form>
     </div>
-  );
-}
+  );
+};
 
+export default Predict;
