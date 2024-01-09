@@ -1,25 +1,22 @@
+import HomeComponent from "@/components/HomeComponent";
+import { parse } from 'cookie';
+import { useEffect, useState } from "react";
 
 
 export default function Home() {
+  const [signInChech,setSignInChech]=useState();
+  const tokenCheck=async()=>{
+    const authTokenCookie = parse(document.cookie).authToken;
+    const hasVerifiedToken = authTokenCookie==null ?false:true;
+    console.log(hasVerifiedToken ,authTokenCookie);
+    setSignInChech(hasVerifiedToken)
+  }
+  useEffect(()=>{
+    tokenCheck();
+  },[setSignInChech])
   return (
     <>
-    <div id="hero">
-      <video autoPlay loop muted>
-        <source src="/videos/video.mp4"/>
-      </video>
-      <div className="content">
-      <div className="container">
-        <h1 className="text-5xl text-gray-200">Makine Öğrenmesi ile Ev Fiyatı Tahmini</h1>
-        <h1 className="text-5xl text-gray-200">Makine Öğrenmesi ile Ev Fiyatı Tahmini</h1>
-        <h1 className="text-5xl text-gray-200">Makine Öğrenmesi ile Ev Fiyatı Tahmini</h1>
-        <h1 className="text-5xl text-gray-200">Makine Öğrenmesi ile Ev Fiyatı Tahmini</h1>
-        <div className="justify-center">
-        <button className="bg-black w-1/2 p-5"></button>
-        <button className="bg-black w-1/2 p-5"></button>
-        </div>
-      </div>
-    </div>
-    </div>
+    <HomeComponent signInChech={signInChech}/>
     </>
   )
 }
