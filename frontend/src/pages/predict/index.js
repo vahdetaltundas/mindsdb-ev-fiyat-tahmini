@@ -65,9 +65,10 @@ const Predict = () => {
             <input
               className="appearance-none block w-full bg-gray-100 text-gray-700 border  rounded py-[0.65rem] leading-tight focus:outline-none focus:bg-white"
               id="area"
-              type="text"
+              type="number"
               value={formik.values.area}
               onChange={formik.handleChange}
+              required
             />
           </div>
           <div className="w-full">
@@ -80,9 +81,10 @@ const Predict = () => {
             <input
               className="appearance-none block w-full bg-gray-100 text-gray-700 border  rounded py-[0.65rem] leading-tight focus:outline-none focus:bg-white"
               id="bedrooms"
-              type="text"
+              type="number"
               value={formik.values.bedrooms}
               onChange={formik.handleChange}
+              required
             />
           </div>
           <div className="w-full">
@@ -95,9 +97,10 @@ const Predict = () => {
             <input
               className="appearance-none block w-full bg-gray-100 text-gray-700 border  rounded py-[0.65rem] leading-tight focus:outline-none focus:bg-white"
               id="bathrooms"
-              type="text"
+              type="number"
               value={formik.values.bathrooms}
               onChange={formik.handleChange}
+              required
             />
           </div>
           <div className="w-full">
@@ -110,9 +113,10 @@ const Predict = () => {
             <input
               className="appearance-none block w-full bg-gray-100 text-gray-700 border  rounded py-[0.65rem] leading-tight focus:outline-none focus:bg-white"
               id="stories"
-              type="text"
+              type="number"
               value={formik.values.stories}
               onChange={formik.handleChange}
+              required
             />
           </div>
 
@@ -187,9 +191,10 @@ const Predict = () => {
             <input
               className="appearance-none block w-full bg-gray-100 text-gray-700 border  rounded py-[0.65rem] leading-tight focus:outline-none focus:bg-white"
               id="parking"
-              type="text"
+              type="number"
               value={formik.values.parking}
               onChange={formik.handleChange}
+              required
             />
           </div>
 
